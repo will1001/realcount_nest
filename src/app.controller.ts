@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body ,Param} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ReqBodyTargetDto } from './dto/target.dto';
 
@@ -40,5 +40,16 @@ export class AppController {
     @Param('category_id') category_id: number,
   ): Promise<any> {
     return { data: await this.appService.getSubCategory(category_id) };
+  }
+
+  @Get('/kecamatan/:id_kabupten')
+  async getKecamatan(@Param('id_kabupten') id_kabupten: String): Promise<any> {
+    return { data: await this.appService.getKecamatan(id_kabupten) };
+  }
+  @Get('/kelurahan/:id_kecamatan')
+  async getKelurahan(
+    @Param('id_kecamatan') id_kecamatan: String,
+  ): Promise<any> {
+    return { data: await this.appService.getKelurahan(id_kecamatan) };
   }
 }

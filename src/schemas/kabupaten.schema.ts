@@ -6,7 +6,7 @@ export type KabupatenDocument = HydratedDocument<Kabupaten>;
 @Schema()
 export class Kabupaten {
   @Prop()
-  _id: number;
+  _id: String;
 
   @Prop()
   name: string;

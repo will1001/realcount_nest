@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { Kabupaten, KabupatenSchema } from './schemas/kabupaten.schema';
 import { Category, CategorySchema } from './schemas/category.schema';
 import { SubCategory, SubCategorySchema } from './schemas/subCategory.schema';
+import { Kecamatan, KecamatanSchema } from './schemas/kecamatan.schema';
+import { Kelurahan, KelurahanSchema } from './schemas/kelurahan.schema';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { SubCategory, SubCategorySchema } from './schemas/subCategory.schema';
       { name: Dapil.name, schema: DapilSchema },
       { name: TargetSuara.name, schema: TargetSuaraSchema },
       { name: Kabupaten.name, schema: KabupatenSchema },
+      { name: Kecamatan.name, schema: KecamatanSchema },
+      { name: Kelurahan.name, schema: KelurahanSchema },
       { name: Category.name, schema: CategorySchema },
       { name: SubCategory.name, schema: SubCategorySchema },
     ]),

@@ -6,6 +6,8 @@ import { Model, Types } from 'mongoose';
 import { Kabupaten } from './schemas/kabupaten.schema';
 import { Category } from './schemas/category.schema';
 import { SubCategory } from './schemas/subCategory.schema';
+import { Kecamatan } from './schemas/kecamatan.schema';
+import { Kelurahan } from './schemas/kelurahan.schema';
 
 @Injectable()
 export class AppService {
@@ -15,6 +17,8 @@ export class AppService {
     @InjectModel(Kabupaten.name) private kabupaten: Model<Kabupaten>,
     @InjectModel(Category.name) private category: Model<Category>,
     @InjectModel(SubCategory.name) private subCategory: Model<SubCategory>,
+    @InjectModel(Kecamatan.name) private kecamatan: Model<Kecamatan>,
+    @InjectModel(Kelurahan.name) private kelurahan: Model<Kelurahan>,
   ) {}
 
   getHello(): string {
@@ -71,5 +75,11 @@ export class AppService {
   }
   async getSubCategory(id: number): Promise<SubCategory[]> {
     return this.subCategory.find({ category_id: +id }).exec();
+  }
+  async getKecamatan(id: String): Promise<Kecamatan[]> {
+    return this.kecamatan.find({ id_kabupaten: id }).exec();
+  }
+  async getKelurahan(id: String): Promise<Kelurahan[]> {
+    return this.kelurahan.find({ id_kecamatan: id }).exec();
   }
 }
