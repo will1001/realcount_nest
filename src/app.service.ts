@@ -3,12 +3,18 @@ import { Dapil } from './schemas/dapil.schema';
 import { TargetSuara } from './schemas/targetSuara.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { Kabupaten } from './schemas/kabupaten.schema';
+import { Category } from './schemas/category.schema';
+import { SubCategory } from './schemas/subCategory.schema';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectModel(Dapil.name) private dapilModel: Model<Dapil>,
     @InjectModel(TargetSuara.name) private targetSuara: Model<TargetSuara>,
+    @InjectModel(Kabupaten.name) private kabupaten: Model<Kabupaten>,
+    @InjectModel(Category.name) private category: Model<Category>,
+    @InjectModel(SubCategory.name) private subCategory: Model<SubCategory>,
   ) {}
 
   getHello(): string {
@@ -56,5 +62,14 @@ export class AppService {
       bodyTarget,
       { new: true, upsert: true },
     );
+  }
+  async getKabupaten(): Promise<Kabupaten[]> {
+    return this.kabupaten.find().exec();
+  }
+  async getCategory(): Promise<Category[]> {
+    return this.category.find().exec();
+  }
+  async getSubCategory(id: number): Promise<SubCategory[]> {
+    return this.subCategory.find({ category_id: +id }).exec();
   }
 }

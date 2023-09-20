@@ -5,6 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Dapil, DapilSchema } from './schemas/dapil.schema';
 import { TargetSuara, TargetSuaraSchema } from './schemas/targetSuara.schema';
 import { ConfigModule } from '@nestjs/config';
+import { Kabupaten, KabupatenSchema } from './schemas/kabupaten.schema';
+import { Category, CategorySchema } from './schemas/category.schema';
+import { SubCategory, SubCategorySchema } from './schemas/subCategory.schema';
 
 @Module({
   imports: [
@@ -15,6 +18,9 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forFeature([
       { name: Dapil.name, schema: DapilSchema },
       { name: TargetSuara.name, schema: TargetSuaraSchema },
+      { name: Kabupaten.name, schema: KabupatenSchema },
+      { name: Category.name, schema: CategorySchema },
+      { name: SubCategory.name, schema: SubCategorySchema },
     ]),
   ],
   controllers: [AppController],

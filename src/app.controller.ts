@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body ,Param} from '@nestjs/common';
 import { AppService } from './app.service';
 import { ReqBodyTargetDto } from './dto/target.dto';
 
@@ -23,5 +23,22 @@ export class AppController {
   @Post('/target')
   postTarget(@Body() body: ReqBodyTargetDto): any {
     return this.appService.postTarget(body);
+  }
+
+  @Get('/kabupaten')
+  async getKabupaten(): Promise<any> {
+    return { data: await this.appService.getKabupaten() };
+  }
+
+  @Get('/category')
+  async getCategory(): Promise<any> {
+    return { data: await this.appService.getCategory() };
+  }
+
+  @Get('/sub_category/:category_id')
+  async getSubCategory(
+    @Param('category_id') category_id: number,
+  ): Promise<any> {
+    return { data: await this.appService.getSubCategory(category_id) };
   }
 }
