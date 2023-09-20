@@ -11,13 +11,13 @@ export class AppController {
     return this.appService.getHello();
   }
   @Get('/dapil')
-  getDapil(): any {
-    return this.appService.getDapil();
+  async getDapil(): Promise<any> {
+    return { data: await this.appService.getDapil() };
   }
 
   @Get('/target')
-  getTarget(): any {
-    return this.appService.getTarget();
+  async getTarget(): Promise<any> {
+    return { data: await this.appService.getTarget() };
   }
 
   @Post('/target')
