@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-api
+    environment:
+      - PORT=${PORT}
+    volumes:
+      - ${DOCKER_VOLUMES_OUT}:${DOCKER_VOLUMES_IN}
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    networks:
+      - sjp_net
+
+networks:
+  sjp_net:
+    name : sjp_net
+    driver: bridge
