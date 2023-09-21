@@ -18,8 +18,6 @@ export class ReqBodyPemilihDto {
 
   id_kelurahan: string;
 
-  id_Pemilih: string;
-
   id_category: string;
 
   id_sub_category: string;

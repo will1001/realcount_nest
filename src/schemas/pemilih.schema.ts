@@ -22,28 +22,27 @@ export class Pemilih {
 
   @Prop()
   tps: string;
-  
+
   @Prop()
   id_kabupaten: string;
 
   @Prop()
   id_kecamatan: string;
-  
+
   @Prop()
   id_kelurahan: string;
 
   @Prop()
-  id_Pemilih: string;
-  
+  id_category: string;
+
   @Prop()
-  id_sub_Pemilih: string;
+  id_sub_category: string;
 
   @Prop()
   id_upa: string;
-  
+
   @Prop()
   id_dpr_level: string;
-
 }
 
 export const PemilihSchema = SchemaFactory.createForClass(Pemilih);
