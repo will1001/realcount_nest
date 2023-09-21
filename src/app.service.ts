@@ -96,8 +96,8 @@ export class AppService {
     if (findPemilih) {
       throw new BadRequestException('Nik Sudah Terdaftar');
     }
+
     const id_pemilih = new Types.ObjectId();
-    const id_suara = new Types.ObjectId();
 
     const data_pemilih = {
       ...bodyTarget,
@@ -105,16 +105,19 @@ export class AppService {
     };
     delete data_pemilih.id_dpr_level;
 
-    const data_suara = {
-      _id: id_suara,
-      user_id: id_pemilih,
-      id_dpr_level: bodyTarget.id_dpr_level,
-    };
-
     const created_pemilih = new this.pemilih(data_pemilih);
-    const created_suara = new this.suara(data_suara);
     created_pemilih.save();
-    created_suara.save();
+
+    for (const el of bodyTarget.id_dpr_level) {
+      console.log(el);
+      const data_suara = {
+        _id: new Types.ObjectId(),
+        user_id: id_pemilih,
+        id_dpr_level: el,
+      };
+      const created_suara = new this.suara(data_suara);
+      created_suara.save();
+    }
     return {};
   }
 
