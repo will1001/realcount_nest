@@ -20,7 +20,9 @@ export class ReqBodyPemilihDto {
 
   id_Pemilih: string;
 
-  id_sub_Pemilih: string;
+  id_category: string;
+
+  id_sub_category: string;
 
   id_upa: string;
 
