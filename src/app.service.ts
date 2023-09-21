@@ -124,4 +124,22 @@ export class AppService {
   async getDprLevel(): Promise<DprLevel[]> {
     return this.dprLevel.find().exec();
   }
+
+  async getSuara(query: any): Promise<any> {
+    const { id_dpr_level } = query;
+    let filter: any = {};
+
+    if (id_dpr_level) filter.id_dpr_level = id_dpr_level;
+    return this.suara.aggregate([
+      {
+        $match: filter,
+      },
+      {
+        $group: {
+          _id: '$id_dpr_level',
+          count: { $sum: 1 }, 
+        },
+      },
+    ]);
+  }
 }

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ReqBodyTargetDto } from './dto/target.dto';
 import { ReqBodyPemilihDto } from './dto/pemilih.dto';
+import { QuerySuaraDto } from './dto/suara.dto';
 
 @Controller()
 export class AppController {
@@ -63,5 +64,10 @@ export class AppController {
   @Post('/pemilih')
   postPemilih(@Body() body: ReqBodyPemilihDto): any {
     return this.appService.postPemilih(body);
+  }
+
+  @Get('/suara')
+  async getSuara(@Query() query: QuerySuaraDto): Promise<any> {
+    return { data: await this.appService.getSuara(query) };
   }
 }
