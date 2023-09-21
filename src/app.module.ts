@@ -10,6 +10,9 @@ import { Category, CategorySchema } from './schemas/category.schema';
 import { SubCategory, SubCategorySchema } from './schemas/subCategory.schema';
 import { Kecamatan, KecamatanSchema } from './schemas/kecamatan.schema';
 import { Kelurahan, KelurahanSchema } from './schemas/kelurahan.schema';
+import { Pemilih, PemilihSchema } from './schemas/pemilih.schema';
+import { Suara, SuaraSchema } from './schemas/suara.schema';
+import { DprLevel, DprLevelSchema } from './schemas/dprLevel.schema';
 
 @Module({
   imports: [
@@ -25,6 +28,9 @@ import { Kelurahan, KelurahanSchema } from './schemas/kelurahan.schema';
       { name: Kelurahan.name, schema: KelurahanSchema },
       { name: Category.name, schema: CategorySchema },
       { name: SubCategory.name, schema: SubCategorySchema },
+      { name: Pemilih.name, schema: PemilihSchema },
+      { name: Suara.name, schema: SuaraSchema },
+      { name: DprLevel.name, schema: DprLevelSchema },
     ]),
   ],
   controllers: [AppController],

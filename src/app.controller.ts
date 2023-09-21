@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ReqBodyTargetDto } from './dto/target.dto';
+import { ReqBodyPemilihDto } from './dto/pemilih.dto';
 
 @Controller()
 export class AppController {
@@ -46,10 +47,21 @@ export class AppController {
   async getKecamatan(@Param('id_kabupten') id_kabupten: String): Promise<any> {
     return { data: await this.appService.getKecamatan(id_kabupten) };
   }
+
   @Get('/kelurahan/:id_kecamatan')
   async getKelurahan(
     @Param('id_kecamatan') id_kecamatan: String,
   ): Promise<any> {
     return { data: await this.appService.getKelurahan(id_kecamatan) };
+  }
+
+  @Get('/dpr_level')
+  async getDprLevel(): Promise<any> {
+    return { data: await this.appService.getDprLevel() };
+  }
+
+  @Post('/pemilih')
+  postPemilih(@Body() body: ReqBodyPemilihDto): any {
+    return this.appService.postPemilih(body);
   }
 }

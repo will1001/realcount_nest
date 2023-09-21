@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Dapil } from './schemas/dapil.schema';
 import { TargetSuara } from './schemas/targetSuara.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -8,6 +8,9 @@ import { Category } from './schemas/category.schema';
 import { SubCategory } from './schemas/subCategory.schema';
 import { Kecamatan } from './schemas/kecamatan.schema';
 import { Kelurahan } from './schemas/kelurahan.schema';
+import { Pemilih } from './schemas/pemilih.schema';
+import { Suara } from './schemas/suara.schema';
+import { DprLevel } from './schemas/dprLevel.schema';
 
 @Injectable()
 export class AppService {
@@ -19,6 +22,9 @@ export class AppService {
     @InjectModel(SubCategory.name) private subCategory: Model<SubCategory>,
     @InjectModel(Kecamatan.name) private kecamatan: Model<Kecamatan>,
     @InjectModel(Kelurahan.name) private kelurahan: Model<Kelurahan>,
+    @InjectModel(Pemilih.name) private pemilih: Model<Pemilih>,
+    @InjectModel(Suara.name) private suara: Model<Suara>,
+    @InjectModel(DprLevel.name) private dprLevel: Model<DprLevel>,
   ) {}
 
   getHello(): string {
@@ -81,5 +87,38 @@ export class AppService {
   }
   async getKelurahan(id: String): Promise<Kelurahan[]> {
     return this.kelurahan.find({ id_kecamatan: id }).exec();
+  }
+  async postPemilih(bodyTarget: any): Promise<any> {
+    const findPemilih: any = await this.pemilih.findOne({
+      nik: bodyTarget.nik,
+    });
+
+    if (findPemilih) {
+      throw new BadRequestException('Nik Sudah Terdaftar');
+    }
+    const id_pemilih = new Types.ObjectId();
+    const id_suara = new Types.ObjectId();
+
+    const data_pemilih = {
+      ...bodyTarget,
+      _id: id_pemilih,
+    };
+    delete data_pemilih.id_dpr_level;
+
+    const data_suara = {
+      _id: id_suara,
+      user_id: id_pemilih,
+      id_dpr_level: bodyTarget.id_dpr_level,
+    };
+
+    const created_pemilih = new this.pemilih(data_pemilih);
+    const created_suara = new this.suara(data_suara);
+    created_pemilih.save();
+    created_suara.save();
+    return {};
+  }
+
+  async getDprLevel(): Promise<DprLevel[]> {
+    return this.dprLevel.find().exec();
   }
 }
