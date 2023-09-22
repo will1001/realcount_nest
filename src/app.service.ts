@@ -136,7 +136,7 @@ export class AppService {
     if (dapil === '2') {
       filter['pemilih.id_kabupaten'] = { $in: ['5201', '5208'] };
     }
-    if (dapil === '3') {
+    if (dapil === '4') {
       filter['pemilih.id_kecamatan'] = {
         $in: [
           '5203031',
@@ -150,7 +150,7 @@ export class AppService {
         ],
       };
     }
-    if (dapil === '4') {
+    if (dapil === '3') {
       filter['pemilih.id_kecamatan'] = {
         $nin: [
           '5203031',
