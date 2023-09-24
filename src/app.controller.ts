@@ -14,6 +14,7 @@ import { QuerySuaraDto } from './dto/suara.dto';
 import { LoginUserDto, RegisterUserDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { ReqQueryUpaDto } from './dto/upa.dto';
 
 @Controller()
 export class AppController {
@@ -128,7 +129,7 @@ export class AppController {
   }
 
   @Get('/upa')
-  async getUpa(): Promise<any> {
-    return { data: await this.appService.getUpa() };
+  async getUpa(@Query() query: ReqQueryUpaDto): Promise<any> {
+    return { data: await this.appService.getUpa(query) };
   }
 }

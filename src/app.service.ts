@@ -340,7 +340,8 @@ export class AppService {
     ]);
   }
 
-  async getUpa(): Promise<Upa[]> {
-    return this.upa.find().exec();
+  async getUpa(query: any): Promise<Upa[]> {
+    const { id_sub_category } = query;
+    return this.upa.find({ id_sub_category }).exec();
   }
 }

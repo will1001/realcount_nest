@@ -12,6 +12,9 @@ export class Upa {
   name: string;
 
   @Prop()
+  id_sub_category: string;
+
+  @Prop()
   jml_anggota: string;
 
 }
