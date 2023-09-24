@@ -11,6 +11,7 @@ import { Kelurahan } from './schemas/kelurahan.schema';
 import { Pemilih } from './schemas/pemilih.schema';
 import { Suara } from './schemas/suara.schema';
 import { DprLevel } from './schemas/dprLevel.schema';
+import { User } from './schemas/user.schema';
 
 @Injectable()
 export class AppService {
@@ -25,6 +26,7 @@ export class AppService {
     @InjectModel(Pemilih.name) private pemilih: Model<Pemilih>,
     @InjectModel(Suara.name) private suara: Model<Suara>,
     @InjectModel(DprLevel.name) private dprLevel: Model<DprLevel>,
+    @InjectModel(User.name) private user: Model<User>,
   ) {}
 
   getHello(): string {
@@ -294,5 +296,45 @@ export class AppService {
     //     $match: filter,
     //   },
     // ]);
+  }
+
+  async register(data: {
+    username: string;
+    id_kabupaten: string;
+    password: string;
+  }): Promise<any> {
+    try {
+      const Newdata = {
+        ...data,
+        _id: new Types.ObjectId(),
+      };
+
+      const created = new this.user(Newdata);
+      return created.save();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async isUsernameRegistered(username: String): Promise<any> {
+    return this.user.aggregate([
+      {
+        $match: { username },
+      },
+      {
+        $lookup: {
+          from: 'kabupatens',
+          localField: 'id_kabupaten',
+          foreignField: '_id',
+          as: 'kabupaten',
+        },
+      },
+      {
+        $unwind: {
+          path: '$kabupaten',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ]);
   }
 }

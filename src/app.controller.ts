@@ -1,12 +1,26 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { ReqBodyTargetDto } from './dto/target.dto';
 import { ReqBodyPemilihDto } from './dto/pemilih.dto';
 import { QuerySuaraDto } from './dto/suara.dto';
+import { LoginUserDto, RegisterUserDto } from './dto/user.dto';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private jwtService: JwtService,
+  ) {}
 
   @Get()
   getHello(): string {
@@ -69,5 +83,46 @@ export class AppController {
   @Get('/suara')
   async getSuara(@Query() query: QuerySuaraDto): Promise<any> {
     return { data: await this.appService.getSuara(query) };
+  }
+
+  @Post('register')
+  async register(@Body() userData: RegisterUserDto): Promise<any> {
+    const { username, id_kabupaten, password } = userData;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    return this.appService.register({
+      username,
+      id_kabupaten,
+      password: hashedPassword,
+    });
+  }
+
+  @Post('login')
+  async login(@Body() userData: LoginUserDto): Promise<any> {
+    const { username, password } = userData;
+
+    const user = await this.appService.isUsernameRegistered(username);
+
+    if (!user[0]) {
+      throw new UnauthorizedException('Username Tidak Terdaftar');
+    }
+
+    if (user[0] && (await bcrypt.compare(password, user[0].password))) {
+      const payload = { id: user[0]._id, username: user[0].username };
+      const accessToken = await this.jwtService.signAsync(payload);
+
+      const loginResponse: any = {
+        access_token: accessToken,
+        user: {
+          username: user[0]?.username,
+          kabupaten: user[0]?.kabupaten ? user[0]?.kabupaten?.name : '',
+        },
+      };
+
+      return loginResponse;
+    }
+
+    throw new UnauthorizedException('Password Salah');
   }
 }

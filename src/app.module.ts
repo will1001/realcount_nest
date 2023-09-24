@@ -13,10 +13,17 @@ import { Kelurahan, KelurahanSchema } from './schemas/kelurahan.schema';
 import { Pemilih, PemilihSchema } from './schemas/pemilih.schema';
 import { Suara, SuaraSchema } from './schemas/suara.schema';
 import { DprLevel, DprLevelSchema } from './schemas/dprLevel.schema';
+import { User, UserSchema } from './schemas/user.schema';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      // signOptions: { expiresIn: '900s' },
+    }),
     MongooseModule.forRoot(
       `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.HOST_DB}/${process.env.DB_NAME}?authMechanism=DEFAULT`,
     ),
@@ -31,6 +38,7 @@ import { DprLevel, DprLevelSchema } from './schemas/dprLevel.schema';
       { name: Pemilih.name, schema: PemilihSchema },
       { name: Suara.name, schema: SuaraSchema },
       { name: DprLevel.name, schema: DprLevelSchema },
+      { name: User.name, schema: UserSchema },
     ]),
   ],
   controllers: [AppController],
