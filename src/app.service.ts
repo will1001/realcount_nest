@@ -12,6 +12,7 @@ import { Pemilih } from './schemas/pemilih.schema';
 import { Suara } from './schemas/suara.schema';
 import { DprLevel } from './schemas/dprLevel.schema';
 import { User } from './schemas/user.schema';
+import { Upa } from './schemas/upa.schema';
 
 @Injectable()
 export class AppService {
@@ -27,6 +28,7 @@ export class AppService {
     @InjectModel(Suara.name) private suara: Model<Suara>,
     @InjectModel(DprLevel.name) private dprLevel: Model<DprLevel>,
     @InjectModel(User.name) private user: Model<User>,
+    @InjectModel(Upa.name) private upa: Model<Upa>,
   ) {}
 
   getHello(): string {
@@ -336,5 +338,9 @@ export class AppService {
         },
       },
     ]);
+  }
+
+  async getUpa(): Promise<Upa[]> {
+    return this.upa.find().exec();
   }
 }

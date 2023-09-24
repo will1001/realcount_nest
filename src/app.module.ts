@@ -15,6 +15,7 @@ import { Suara, SuaraSchema } from './schemas/suara.schema';
 import { DprLevel, DprLevelSchema } from './schemas/dprLevel.schema';
 import { User, UserSchema } from './schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
+import { Upa, UpaSchema } from './schemas/upa.schema';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { JwtModule } from '@nestjs/jwt';
       { name: Suara.name, schema: SuaraSchema },
       { name: DprLevel.name, schema: DprLevelSchema },
       { name: User.name, schema: UserSchema },
+      { name: Upa.name, schema: UpaSchema },
     ]),
   ],
   controllers: [AppController],

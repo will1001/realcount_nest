@@ -116,6 +116,7 @@ export class AppController {
         access_token: accessToken,
         user: {
           username: user[0]?.username,
+          id_kabupaten: user[0]?.id_kabupaten,
           kabupaten: user[0]?.kabupaten ? user[0]?.kabupaten?.name : '',
         },
       };
@@ -124,5 +125,10 @@ export class AppController {
     }
 
     throw new UnauthorizedException('Password Salah');
+  }
+
+  @Get('/upa')
+  async getUpa(): Promise<any> {
+    return { data: await this.appService.getUpa() };
   }
 }
