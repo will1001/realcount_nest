@@ -341,7 +341,11 @@ export class AppService {
   }
 
   async getUpa(query: any): Promise<Upa[]> {
-    const { id_sub_category } = query;
-    return this.upa.find({ id_sub_category }).exec();
+    let filter: any = {};
+    const { id_sub_category, id_kabupaten } = query;
+
+    if (id_sub_category) filter.id_sub_category = id_sub_category;
+    if (id_kabupaten) filter.id_kabupaten = id_kabupaten;
+    if (id_sub_category) return this.upa.find(filter).exec();
   }
 }
