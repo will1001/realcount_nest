@@ -81,6 +81,11 @@ export class AppController {
     return this.appService.postPemilih(body);
   }
 
+  @Get('/pemilih')
+  async getPemilih(@Query() query: ReqBodyPemilihDto): Promise<any> {
+    return { data: await this.appService.getPemilih(query) };
+  }
+
   @Get('/suara')
   async getSuara(@Query() query: QuerySuaraDto): Promise<any> {
     return { data: await this.appService.getSuara(query) };

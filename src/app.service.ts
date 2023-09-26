@@ -348,4 +348,54 @@ export class AppService {
     if (id_kabupaten) filter.id_kabupaten = id_kabupaten;
     if (id_sub_category) return this.upa.find(filter).exec();
   }
+
+  async getPemilih(query: any): Promise<Upa[]> {
+    const {
+      nama,
+      nik,
+      gender,
+      alamat,
+      tps,
+      id_kabupaten,
+      id_kecamatan,
+      id_kelurahan,
+      id_category,
+      id_sub_category,
+      id_upa,
+      id_dpr_level,
+    } = query;
+    let filter: any = {};
+    let filterChild: any = {};
+    if (id_dpr_level) filterChild.id_dpr_level = id_dpr_level;
+    if (nama) filter.nama = nama;
+    if (nik) filter.nik = nik;
+    if (gender) filter.gender = gender;
+    if (alamat) filter.alamat = alamat;
+    if (tps) filter.tps = tps;
+    if (id_kabupaten) filter.id_kabupaten = id_kabupaten;
+    if (id_kecamatan) filter.id_kecamatan = id_kecamatan;
+    if (id_kelurahan) filter.id_kelurahan = id_kelurahan;
+    if (id_category) filter.id_category = id_category;
+    if (id_sub_category) filter.id_sub_category = id_sub_category;
+    if (id_upa) filter.id_upa = id_upa;
+
+    return this.pemilih.aggregate([
+      {
+        $match: filter,
+      },
+      {
+        $lookup: {
+          from: 'suaras',
+          localField: '_id',
+          foreignField: 'user_id',
+          as: 'suara',
+          pipeline: [
+            {
+              $match: filterChild,
+            },
+          ],
+        },
+      },
+    ]);
+  }
 }
