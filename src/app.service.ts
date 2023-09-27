@@ -448,6 +448,20 @@ export class AppService {
           ],
         },
       },
+      {
+        $lookup: {
+          from: 'subcategories',
+          localField: 'id_sub_category',
+          foreignField: '_id',
+          as: 'sub_category',
+        },
+      },
+      {
+        $unwind: {
+          path: '$sub_category',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
     ]);
   }
 }

@@ -33,10 +33,10 @@ export class Pemilih {
   id_kelurahan: string;
 
   @Prop()
-  id_category: string;
+  id_category: number;
 
   @Prop()
-  id_sub_category: string;
+  id_sub_category: number;
 
   @Prop()
   id_upa: string;
