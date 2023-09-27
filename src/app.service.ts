@@ -217,37 +217,37 @@ export class AppService {
           },
           dpc: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_sub_category', '5'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_sub_category', 5] }, 1, 0],
             },
           },
           dpra: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_sub_category', '6'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_sub_category', 6] }, 1, 0],
             },
           },
           bko: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_category', '5'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_category', 5] }, 1, 0],
             },
           },
           bpkk: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_category', '4'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_category', 4] }, 1, 0],
             },
           },
           bpu: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_category', '7'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_category', 7] }, 1, 0],
             },
           },
           kepemudaan: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_category', '6'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_category', 6] }, 1, 0],
             },
           },
           tn: {
             $sum: {
-              $cond: [{ $eq: ['$pemilih.id_category', '8'] }, 1, 0],
+              $cond: [{ $eq: ['$pemilih.id_category', 8] }, 1, 0],
             },
           },
         },
