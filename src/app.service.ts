@@ -377,7 +377,7 @@ export class AppService {
     if (id_kelurahan) filter.id_kelurahan = id_kelurahan;
     if (id_category) filter.id_category = id_category;
     if (id_sub_category) filter.id_sub_category = id_sub_category;
-    if (id_upa) filter.id_upa = id_upa;
+    if (id_upa) filter.id_upa = { $ne: '' };
 
     return this.pemilih.aggregate([
       {
