@@ -156,15 +156,19 @@ export class AppService {
     }
     if (dapil === '3') {
       filter['pemilih.id_kecamatan'] = {
-        $nin: [
-          '5203031',
-          '5203030',
-          '5203040',
-          '5203020',
-          '5203021',
-          '5203022',
-          '5203010',
-          '5203011',
+        $in: [
+          '5203050',
+          '5203060',
+          '5203070',
+          '5203080',
+          '5203090',
+          '5203100',
+          '5203051',
+          '5203061',
+          '5203091',
+          '5203092',
+          '5203081',
+          '5203071',
         ],
       };
     }
@@ -181,14 +185,7 @@ export class AppService {
     }
     if (dapil === '8') {
       filter['pemilih.id_kecamatan'] = {
-        $nin: [
-          '5202060',
-          '5202061',
-          '5202040',
-          '5202050',
-          '5202090',
-          '5202091',
-        ],
+        $in: ['5202070', '5202020', '5202010', '5202030', '5202011', '5202080'],
       };
     }
 
@@ -363,7 +360,7 @@ export class AppService {
       id_sub_category,
       id_upa,
       id_dpr_level,
-      dapil
+      dapil,
     } = query;
     let filter: any = {};
     let filterChild: any = {};
@@ -379,7 +376,7 @@ export class AppService {
     if (id_category) filter.id_category = id_category;
     if (id_sub_category) filter.id_sub_category = id_sub_category;
     if (id_upa) filter.id_upa = { $ne: '' };
-      if (dapil === '1') {
+    if (dapil === '1') {
       filter.id_kabupaten = { $in: ['5271'] };
     }
     if (dapil === '2') {
@@ -401,15 +398,19 @@ export class AppService {
     }
     if (dapil === '3') {
       filter.id_kecamatan = {
-        $nin: [
-          '5203031',
-          '5203030',
-          '5203040',
-          '5203020',
-          '5203021',
-          '5203022',
-          '5203010',
-          '5203011',
+        $in: [
+          '5203050',
+          '5203060',
+          '5203070',
+          '5203080',
+          '5203090',
+          '5203100',
+          '5203051',
+          '5203061',
+          '5203091',
+          '5203092',
+          '5203081',
+          '5203071',
         ],
       };
     }
@@ -426,14 +427,7 @@ export class AppService {
     }
     if (dapil === '8') {
       filter.id_kecamatan = {
-        $nin: [
-          '5202060',
-          '5202061',
-          '5202040',
-          '5202050',
-          '5202090',
-          '5202091',
-        ],
+        $in: ['5202070', '5202020', '5202010', '5202030', '5202011', '5202080'],
       };
     }
 
