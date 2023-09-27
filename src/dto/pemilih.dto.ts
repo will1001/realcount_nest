@@ -24,5 +24,7 @@ export class ReqBodyPemilihDto {
 
   id_upa: string;
 
+  dapil: string;
+
   id_dpr_level: any;
 }

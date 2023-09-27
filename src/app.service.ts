@@ -363,6 +363,7 @@ export class AppService {
       id_sub_category,
       id_upa,
       id_dpr_level,
+      dapil
     } = query;
     let filter: any = {};
     let filterChild: any = {};
@@ -378,6 +379,63 @@ export class AppService {
     if (id_category) filter.id_category = id_category;
     if (id_sub_category) filter.id_sub_category = id_sub_category;
     if (id_upa) filter.id_upa = { $ne: '' };
+      if (dapil === '1') {
+      filter.id_kabupaten = { $in: ['5271'] };
+    }
+    if (dapil === '2') {
+      filter.id_kabupaten = { $in: ['5201', '5208'] };
+    }
+    if (dapil === '4') {
+      filter.id_kecamatan = {
+        $in: [
+          '5203031',
+          '5203030',
+          '5203040',
+          '5203020',
+          '5203021',
+          '5203022',
+          '5203010',
+          '5203011',
+        ],
+      };
+    }
+    if (dapil === '3') {
+      filter.id_kecamatan = {
+        $nin: [
+          '5203031',
+          '5203030',
+          '5203040',
+          '5203020',
+          '5203021',
+          '5203022',
+          '5203010',
+          '5203011',
+        ],
+      };
+    }
+    if (dapil === '5') {
+      filter.id_kabupaten = { $in: ['5207', '5204'] };
+    }
+    if (dapil === '6') {
+      filter.id_kabupaten = { $in: ['5206', '5272', '5205'] };
+    }
+    if (dapil === '7') {
+      filter.id_kecamatan = {
+        $in: ['5202060', '5202061', '5202040', '5202050', '5202090', '5202091'],
+      };
+    }
+    if (dapil === '8') {
+      filter.id_kecamatan = {
+        $nin: [
+          '5202060',
+          '5202061',
+          '5202040',
+          '5202050',
+          '5202090',
+          '5202091',
+        ],
+      };
+    }
 
     return this.pemilih.aggregate([
       {
