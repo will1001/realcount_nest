@@ -449,6 +449,63 @@ export class AppService {
           ],
         },
       },
+      
+      {
+        $lookup: {
+          from: 'kabupatens',
+          localField: 'id_kabupaten',
+          foreignField: '_id',
+          as: 'kabupaten',
+        },
+      },
+      {
+        $unwind: {
+          path: '$kabupaten',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'kecamatans',
+          localField: 'id_kecamatan',
+          foreignField: '_id',
+          as: 'kecamatan',
+        },
+      },
+      {
+        $unwind: {
+          path: '$kecamatan',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'kelurahans',
+          localField: 'id_kelurahan',
+          foreignField: '_id',
+          as: 'kelurahan',
+        },
+      },
+      {
+        $unwind: {
+          path: '$kelurahan',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'id_category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      {
+        $unwind: {
+          path: '$category',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
       {
         $lookup: {
           from: 'subcategories',
@@ -460,6 +517,20 @@ export class AppService {
       {
         $unwind: {
           path: '$sub_category',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'upas',
+          localField: 'id_upa',
+          foreignField: '_id',
+          as: 'upa',
+        },
+      },
+      {
+        $unwind: {
+          path: '$upa',
           preserveNullAndEmptyArrays: true,
         },
       },
