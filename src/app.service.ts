@@ -373,8 +373,8 @@ export class AppService {
     if (id_kabupaten) filter.id_kabupaten = id_kabupaten;
     if (id_kecamatan) filter.id_kecamatan = id_kecamatan;
     if (id_kelurahan) filter.id_kelurahan = id_kelurahan;
-    if (id_category) filter.id_category = id_category;
-    if (id_sub_category) filter.id_sub_category = id_sub_category;
+    if (id_category) filter.id_category = Number(id_category);
+    if (id_sub_category) filter.id_sub_category = Number(id_sub_category);
     if (id_upa) filter.id_upa = { $ne: '' };
     if (dapil === '1') {
       filter.id_kabupaten = { $in: ['5271'] };
@@ -430,6 +430,7 @@ export class AppService {
         $in: ['5202070', '5202020', '5202010', '5202030', '5202011', '5202080'],
       };
     }
+    console.log(filter);
 
     return this.pemilih.aggregate([
       {
