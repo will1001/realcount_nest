@@ -13,6 +13,7 @@ import { Suara } from './schemas/suara.schema';
 import { DprLevel } from './schemas/dprLevel.schema';
 import { User } from './schemas/user.schema';
 import { Upa } from './schemas/upa.schema';
+import { ReqBodyPemilihDto } from './dto/pemilih.dto';
 
 @Injectable()
 export class AppService {
@@ -92,7 +93,7 @@ export class AppService {
   async getKelurahan(id: String): Promise<Kelurahan[]> {
     return this.kelurahan.find({ id_kecamatan: id }).exec();
   }
-  async postPemilih(bodyTarget: any): Promise<any> {
+  async postPemilih(bodyTarget: ReqBodyPemilihDto): Promise<any> {
     const findPemilih: any = await this.pemilih.findOne({
       nik: bodyTarget.nik,
     });
@@ -449,7 +450,7 @@ export class AppService {
           ],
         },
       },
-      
+
       {
         $lookup: {
           from: 'kabupatens',
@@ -535,5 +536,59 @@ export class AppService {
         },
       },
     ]);
+  }
+
+  async uploadPemilih(datas: any): Promise<any> {
+    for (const data of datas) {
+      const {
+        nik,
+        nama,
+        gender,
+        alamat,
+        tps,
+        id_category,
+        id_sub_category,
+        id_kabupaten,
+        id_kecamatan,
+        id_kelurahan,
+        id_upa,
+        id_dpr_level,
+      } = data;
+      console.log(data);
+      const findPemilih: any = await this.pemilih.findOne({
+        nik: nik.toString(),
+      });
+      if (findPemilih) {
+        throw new BadRequestException('Nik Sudah Terdaftar');
+      }
+      const id_pemilih = new Types.ObjectId();
+      const data_pemilih = {
+        nama,
+        nik: nik.toString(),
+        gender,
+        alamat,
+        tps,
+        id_category,
+        id_sub_category,
+        id_kabupaten: id_kabupaten ? id_kabupaten.toString() : '',
+        id_kecamatan: id_kecamatan ? id_kecamatan.toString() : '',
+        id_kelurahan: id_kelurahan ? id_kelurahan.toString() : '',
+        id_upa: id_upa ? id_upa : '',
+        _id: id_pemilih,
+      };
+      // delete data_pemilih.id_dpr_level;
+      const created_pemilih = new this.pemilih(data_pemilih);
+      created_pemilih.save();
+      for (const el of JSON.parse(id_dpr_level)) {
+        const data_suara = {
+          _id: new Types.ObjectId(),
+          user_id: id_pemilih,
+          id_dpr_level: el,
+        };
+        const created_suara = new this.suara(data_suara);
+        created_suara.save();
+      }
+    }
+    return {};
   }
 }

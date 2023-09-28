@@ -6,6 +6,8 @@ import {
   Param,
   Query,
   UnauthorizedException,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ReqBodyTargetDto } from './dto/target.dto';
@@ -15,6 +17,8 @@ import { LoginUserDto, RegisterUserDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ReqQueryUpaDto } from './dto/upa.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as xlsx from 'xlsx';
 
 @Controller()
 export class AppController {
@@ -136,5 +140,28 @@ export class AppController {
   @Get('/upa')
   async getUpa(@Query() query: ReqQueryUpaDto): Promise<any> {
     return { data: await this.appService.getUpa(query) };
+  }
+
+  @Post('/upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file) {
+    try {
+      const workbook = xlsx.read(file.buffer, { type: 'buffer' });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+
+      // Parse the sheet data as needed
+      const data = xlsx.utils.sheet_to_json(sheet);
+
+      // Process the data or save it to a database
+      console.log('Parsed Excel data:', data);
+
+      this.appService.uploadPemilih(data);
+
+      return { message: 'Excel file uploaded and parsed successfully.' };
+    } catch (error) {
+      console.error('Error parsing Excel file:', error);
+      throw new Error('Failed to parse the Excel file.');
+    }
   }
 }
